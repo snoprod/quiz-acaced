@@ -492,7 +492,14 @@
 <div class="toast" id="toast"></div>
 
 <script src="questions.js"></script>
+<script src="answers.js"></script>
 <script>
+// Merge answers into questions at load time
+QUESTIONS.forEach(q => {
+  const a = ANSWERS[q.id];
+  if (a) { q.r = a.r; q.ok = a.ok; q.nb = a.r.length; }
+});
+
 // ═══════════════════════════════════════════════
 //  STATE
 // ═══════════════════════════════════════════════
@@ -578,7 +585,6 @@ function renderQuestion() {
   // Question
   document.getElementById('q-id-label').textContent = 'Q.' + q.id;
   document.getElementById('q-text').textContent = q.q;
-  document.getElementById('q-nb').textContent = q.nb;
   document.getElementById('q-hint').innerHTML = `Sélectionnez <span>${q.nb}</span> réponse(s)`;
 
   // Choices
