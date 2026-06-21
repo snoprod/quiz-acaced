@@ -507,6 +507,20 @@ let selectedTheme = 'chiens';
 let nbQuestions = 10;
 let scriptUrl = '';
 let sessionQuestions = [];
+
+// Lecture du paramètre ?id= dans l'URL
+(function() {
+  const urlId = new URLSearchParams(window.location.search).get('id');
+  if (urlId) {
+    scriptUrl = urlId;
+    const input = document.getElementById('sheet-url');
+    if (input) {
+      input.value = urlId;
+      const wrapper = input.closest('div[style]');
+      if (wrapper) wrapper.style.display = 'none';
+    }
+  }
+})();
 let currentIdx = 0;
 let selectedAnswers = [];
 let answered = false;
@@ -544,7 +558,7 @@ function setNb(btn, n) {
 }
 
 function startQuiz() {
-  scriptUrl = document.getElementById('sheet-url').value.trim();
+  scriptUrl = document.getElementById('sheet-url').value.trim() || scriptUrl;
 
   // Filter questions by theme
   let pool = QUESTIONS;
